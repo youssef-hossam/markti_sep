@@ -1,54 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:introduction_screen/introduction_screen.dart';
+import 'package:markti/features/on_boarding/widgets/create_custom_view_model.dart';
 import 'package:markti/features/on_boarding/widgets/on_boarding_page.dart';
-import 'package:onboarding/onboarding.dart';
 
-class OnbardingView extends StatelessWidget {
-  const OnbardingView({super.key});
+class OnbardingView extends StatefulWidget {
+  OnbardingView({super.key});
+
+  @override
+  State<OnbardingView> createState() => _OnbardingViewState();
+}
+
+class _OnbardingViewState extends State<OnbardingView> {
+  final _introKey = GlobalKey<IntroductionScreenState>();
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Onboarding(
-            swipeableBody: [
-          OnBoardingPage(
-            imagePath: 'assets/images/onboarding_1.png',
-            title: 'Welcome to Markti',
-            description:
-                'Discover a world of endless possibilities and shop from the comfort of your fingertips. Browse through a wide range of products, from fashion and electronics to home.',
+        body: Stack(
+      children: [
+        IntroductionScreen(
+          dotsDecorator: DotsDecorator(
+            activeColor: Colors.blue,
+            size: Size(10, 10),
+            activeSize: Size(22, 10),
+            activeShape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
           ),
-          OnBoardingPage(
-            imagePath: 'assets/images/onboarding_2.png',
-            title: 'Welcome to Markti',
-            description:
-                'Discover a world of endless possibilities and shop from the comfort of your fingertips. Browse through a wide range of products, from fashion and electronics to home.',
+          key: _introKey,
+          //
+          onChange: (value) {
+            print('Current page: $value');
+            currentPage = value;
+            setState(() {});
+          },
+          controlsPosition: const Position(
+            left: 0,
+            right: 0,
+            bottom: 80, // Move controls (dots + buttons) up
           ),
-          OnBoardingPage(
-            imagePath: 'assets/images/onboarding_3.png',
-            title: 'Welcome to Markti',
-            description:
-                'Discover a world of endless possibilities and shop from the comfort of your fingertips. Browse through a wide range of products, from fashion and electronics to home.',
+          showNextButton: false,
+      
+
+          showDoneButton: false,
+          next: ElevatedButton(
+            onPressed: () {},
+            child: Text('next'),
+            style: ElevatedButton.styleFrom(
+              fixedSize: Size(double.infinity, 80),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+            ),
           ),
-          // const Text('Page 2'),
-          // const Text('Page 3')
-        ] //[List<Widget>] - List of swipeable widgets
-            ,
-            startIndex: 0, //[int] - the starting index of the swipeable widgets
-            onPageChanges:
-                (netDragDistance, pagesLength, currentIndex, slideDirection) {
-              //1) [pagesLength] The drage distance from swipping
-              //2) [pagesLength] The length of the swipeable widgets
-              //3) [currentIndex] The currect index
-              //4) [slideDirection] The slide direction
+          pages: [
+            createCustomViewModel(
+              imagePath: 'assets/images/onboarding_1.png',
+              title: 'Welcome to Markti',
+              description:
+                  'Discover a world of endless possibilities and shop from the comfort of your fingertips. Browse through a wide range of products, from fashion and electronics to home.',
+            ),
+            createCustomViewModel(
+              imagePath: 'assets/images/onboarding_2.png',
+              title: 'Seamless Shopping Experience',
+              description:
+                  'Experience a seamless and convenient shopping journey with our user-friendly interface. Effortlessly navigate through categories, search for products, and enjoy a smooth checkout process.',
+            ),
+            createCustomViewModel(
+              imagePath: 'assets/images/onboarding_3.png',
+              title: 'Secure and Reliable',
+              description:
+                  'Shop with confidence knowing that your personal information and transactions are protected with the highest level of security. We prioritize your privacy and ensure a safe shopping environment.',
+            ),
+          ],
+        ),
+        Positioned(
+          bottom: 20,
+          left: 20,
+          right: 20,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                fixedSize: Size(400, 50),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0))),
+            child: Text(currentPage == 2 ? 'Get Started' : 'Next',
+                style: TextStyle(fontSize: 16, color: Colors.white)),
+            onPressed: () {
+              if (currentPage == 0 || currentPage == 1) {
+                _introKey.currentState?.next();
+              } else if (currentPage == 2) {
+                // Navigate to the next page
+              }
+              // Navigate to the next page
             },
-            // buildHeader:(context, netDragDistance, pagesLength, currentIndex, setIndex, slideDirection){
-            //   //Use this to build a header in your onboarding that will display at all times. (Used to build routing buttons, indicators, etc)
-            //   //This is same as onPageChanges but with [setIndex] added to allow u to change the index from this header
-            // },
-            // buildFooter:(context, netDragDistance, pagesLength, currentIndex, setIndex, slideDirection){
-            //   re
-            //   //Use this to build a footer in your onboarding that will display at all times. (Used to build routing buttons, indicators, etc)
-            // },
-            animationInMilliseconds: 300 //[int] - the speed of animations in ms
-            ));
+          ),
+        )
+      ],
+    ));
   }
 }
