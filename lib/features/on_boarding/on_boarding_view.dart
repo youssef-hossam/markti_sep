@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:markti/features/on_boarding/widgets/create_custom_view_model.dart';
 import 'package:markti/features/on_boarding/widgets/on_boarding_page.dart';
@@ -16,10 +19,15 @@ class _OnbardingViewState extends State<OnbardingView> {
 
   @override
   Widget build(BuildContext context) {
+    MediaQuery.of(context).size.height;
+    // final double height = MediaQuery.of(context).size.height;
+    // log('Screen height: $height');
     return Scaffold(
         body: Stack(
       children: [
         IntroductionScreen(
+          
+          // scrollPhysics: NeverScrollableScrollPhysics(),
           dotsDecorator: DotsDecorator(
             activeColor: Colors.blue,
             size: Size(10, 10),
@@ -35,13 +43,12 @@ class _OnbardingViewState extends State<OnbardingView> {
             currentPage = value;
             setState(() {});
           },
-          controlsPosition: const Position(
+          controlsPosition: Position(
             left: 0,
             right: 0,
-            bottom: 80, // Move controls (dots + buttons) up
+            bottom: 60.h, // Move controls (dots + buttons) up
           ),
           showNextButton: false,
-      
 
           showDoneButton: false,
           next: ElevatedButton(
@@ -77,7 +84,7 @@ class _OnbardingViewState extends State<OnbardingView> {
           ],
         ),
         Positioned(
-          bottom: 20,
+          bottom: 20.h,
           left: 20,
           right: 20,
           child: ElevatedButton(

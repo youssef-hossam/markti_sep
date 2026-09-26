@@ -1,53 +1,59 @@
-
-  import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 
-PageViewModel createCustomViewModel(
-      {required String imagePath,
-      required String title,
-      required String description}) {
-    return PageViewModel(
-      decoration: PageDecoration(
-        imageFlex: 2,
+PageViewModel createCustomViewModel({
+  required String imagePath,
+  required String title,
+  required String description,
+}) {
+  return PageViewModel(
+    decoration: PageDecoration(
+      // bodyFlex: 1,
 
-        // imageAlignment: Alignment.
+      imageFlex: 2,
+      titlePadding: EdgeInsets.only(top: 16.h, bottom: 4.h),
+      titleTextStyle: TextStyle(
+        fontSize: 26.sp,
+        fontWeight: FontWeight.bold,
       ),
 
-      image: Column(
-        children: [
-          SizedBox(
-            height: 110,
-          ),
-          Image.asset(
-            imagePath,
-            height: 350,
-            fit: BoxFit.cover,
-          ),
-        ],
-      ),
-      bodyWidget: Text(
-        description,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 16,
-          color: Colors.grey[600],
+      // imageAlignment: Alignment.
+    ),
+
+    image: Column(
+      children: [
+        SizedBox(
+          height: 130.h,
         ),
+        Image.asset(
+          imagePath,
+          height: 275.h,
+          fit: BoxFit.cover,
+        ),
+      ],
+    ),
+    bodyWidget: Text(
+      description,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 16.sp,
+        color: Colors.grey[600],
       ),
+    ),
 
-      // title: 'Welcome to Markti',
-      titleWidget: Column(
-        children: [
-          // SizedBox(
-          //   height: 84,
-          // ),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.bold,
-            ),
+    // title: 'Welcome to Markti',
+    titleWidget: Column(
+      children: [
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 26.sp,
+            fontWeight: FontWeight.bold,
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
