@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:markti/features/auth/widgets/custom_text_form_field.dart';
+import 'package:markti/features/auth/widgets/icon_button.dart';
 import 'package:markti/features/auth/widgets/skip_button.dart';
 
 class SignInView extends StatelessWidget {
+  static const String routeName = '/signIn';
   const SignInView({super.key});
 
   @override
@@ -100,6 +102,51 @@ class SignInView extends StatelessWidget {
                       // Navigate to the next page
                     },
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SocialIconButton(
+                        icon_social: google,
+                      ),
+                      SocialIconButton(
+                        icon_social: apple,
+                      ),
+                      SocialIconButton(
+                        icon_social: facebook,
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Are you new in Marketi?",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 0.w,
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: Size.zero,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/register');
+                        },
+                        child: Text(
+                          "Register",
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
                 ]),
               )
             ]),

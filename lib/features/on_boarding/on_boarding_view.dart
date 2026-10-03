@@ -3,17 +3,18 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:markti/features/auth/views/sign_in_view.dart';
 import 'package:markti/features/on_boarding/widgets/create_custom_view_model.dart';
 import 'package:markti/features/on_boarding/widgets/on_boarding_page.dart';
 
-class OnbardingView extends StatefulWidget {
-  OnbardingView({super.key});
+class OnboardingView extends StatefulWidget {
+  OnboardingView({super.key});
 
   @override
-  State<OnbardingView> createState() => _OnbardingViewState();
+  State<OnboardingView> createState() => _OnboardingViewState();
 }
 
-class _OnbardingViewState extends State<OnbardingView> {
+class _OnboardingViewState extends State<OnboardingView> {
   final _introKey = GlobalKey<IntroductionScreenState>();
   int currentPage = 0;
 
@@ -26,7 +27,6 @@ class _OnbardingViewState extends State<OnbardingView> {
         body: Stack(
       children: [
         IntroductionScreen(
-          
           // scrollPhysics: NeverScrollableScrollPhysics(),
           dotsDecorator: DotsDecorator(
             activeColor: Colors.blue,
@@ -88,6 +88,7 @@ class _OnbardingViewState extends State<OnbardingView> {
           left: 20,
           right: 20,
           child: ElevatedButton(
+
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
                 fixedSize: Size(400, 50),
@@ -99,7 +100,7 @@ class _OnbardingViewState extends State<OnbardingView> {
               if (currentPage == 0 || currentPage == 1) {
                 _introKey.currentState?.next();
               } else if (currentPage == 2) {
-                // Navigate to the next page
+                Navigator.pushReplacementNamed(context, SignInView.routeName);
               }
               // Navigate to the next page
             },
