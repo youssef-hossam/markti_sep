@@ -1,12 +1,20 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:markti/core/api/api_consumer.dart';
+import 'package:markti/core/api/api_error_handler.dart';
+import 'package:markti/features/auth/auth.dart';
+import 'package:markti/features/auth/widgets/castome_field_user.dart';
 import 'package:markti/features/auth/widgets/custom_text_form_field.dart';
 import 'package:markti/features/auth/widgets/icon_button.dart';
 import 'package:markti/features/auth/widgets/skip_button.dart';
 
 class SignInView extends StatelessWidget {
   static const String routeName = '/signIn';
-  const SignInView({super.key});
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  SignInView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,17 +46,22 @@ class SignInView extends StatelessWidget {
               ),
               Form(
                 child: Column(children: [
-                  CustomTextFormField(
-                    labelText: 'Email',
+                  CustomUserField(
+                    hint_text: 'Email',
+                    controller: _emailController,
+                    label_text: 'Email',
                     icon: Icons.email_outlined,
                   ),
                   SizedBox(
                     height: 16.h,
                   ),
-                  CustomTextFormField(
-                    labelText: 'Password',
+                  CustomUserField(
+                    ispassword: true,
+                    hint_text: 'Password',
+                    controller: _passwordController,
+                    label_text: 'Password',
                     icon: Icons.lock_outlined,
-                    isPassword: true,
+                    // isPassword: true,
                   ),
                   SizedBox(
                     height: 4.h,
@@ -99,7 +112,11 @@ class SignInView extends StatelessWidget {
                     child: Text(' Log In',
                         style: TextStyle(fontSize: 16, color: Colors.white)),
                     onPressed: () {
-                      // Navigate to the next page
+                      loginUser(
+                        context,
+                        _emailController.text,
+                        _passwordController.text,
+                      );
                     },
                   ),
                   Row(

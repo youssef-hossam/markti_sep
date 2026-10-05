@@ -2,6 +2,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:markti/core/api/api_consumer.dart';
+import 'package:markti/core/api/api_error_handler.dart';
+import 'package:markti/core/api/api_error_model.dart';
+import 'package:markti/features/auth/auth.dart';
 import 'package:markti/features/auth/widgets/button_widget.dart';
 import 'package:markti/features/auth/widgets/castome_field_user.dart';
 import 'package:markti/features/auth/widgets/icon_button.dart';
@@ -225,7 +229,13 @@ class _RegisterViewState extends State<RegisterView> {
                   text: "Sign Up",
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      registerUser();
+                      registerUser(
+                        _emailController.text,
+                        _passwordController.text,
+                        _first_nameController.text,
+                        _last_nameController.text,
+                        context,
+                      );
                     }
                   },
                 ),
@@ -270,48 +280,5 @@ class _RegisterViewState extends State<RegisterView> {
         ),
       ),
     );
-  }
-
-  //
-  Future<void> registerUser() async {
-    try {
-      Response response = await Dio().post(
-          'https://accessories-eshop.runasp.net/api/auth/register',
-          data: {
-            "email": _emailController.text,
-            "password": _passwordController.text,
-            "firstName": _first_nameController.text,
-            "lastName": _last_nameController.text
-          });
-      print(response.data);
-      print('Response data From Api :${response.statusCode}');
-
-      AwesomeDialog(
-        context: context,
-        dialogType: DialogType.info,
-        animType: AnimType.rightSlide,
-        title: 'Registration Successful',
-        desc:
-            'an otp is sent to your email inbox please use it to verify your email ',
-        // btnCancelOnPress: () {},
-        btnOkOnPress: () {
-          // Navigate to the next page( Otp verification page)
-        },
-      )..show();
-    } on DioException catch (e) {
-      AwesomeDialog(
-        context: context,
-        dialogType: DialogType.info,
-        animType: AnimType.rightSlide,
-        title: 'Registration Failed',
-        desc:
-            '${e.message}',
-        // btnCancelOnPress: () {},
-        btnOkOnPress: () {
-          // Navigate to the next page( Otp verification page)
-        },
-      )..show();
-      // TODO
-    }
   }
 }
