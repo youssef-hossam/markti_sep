@@ -29,11 +29,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   awesome_dialog: ^3.2.1
+  bloc: ^9.2.1
   cupertino_icons: ^1.0.2
   dartz: ^0.10.1
   dio: ^5.11.1
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.11
   flutter_screenutil: ^5.9.3
