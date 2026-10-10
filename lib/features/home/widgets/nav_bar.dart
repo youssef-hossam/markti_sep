@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:markti/features/home/home_view.dart';
+import 'package:markti/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:markti/features/profile/presentation/views/profile_view.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -12,7 +15,10 @@ class _NavBarState extends State<NavBar> {
     HomeView(),
     Center(child: Text('Cart Page')),
     Center(child: Text('Favorites Page')),
-    Center(child: Text('Menu Page')),
+    // Center(child: Text('Menu Page')),
+    BlocProvider(
+        create: (context) => ProfileCubit()..getUserData(),
+        child: ProfileView())
   ];
   int currentIndex = 0;
 

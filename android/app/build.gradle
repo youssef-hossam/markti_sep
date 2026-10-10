@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.example.markti"
-    compileSdkVersion 31
+    compileSdkVersion 34
     ndkVersion "25.1.8937393"
 
     compileOptions {
