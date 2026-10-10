@@ -12,65 +12,68 @@ class ProfileView extends StatefulWidget {
 }
 
 class _ProfileViewState extends State<ProfileView> {
-  initState() {
-    super.initState();
-    BlocProvider.of<ProfileCubit>(context).getUserData();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => ProfileCubit(),
-        child: Center(
-          child: BlocBuilder<ProfileCubit, ProfileState>(
-            builder: (context, state) {
-              if (state is ProfileSucess) {
-                log(state.userModel.fullName);
-                log(state.userModel.email);
-              }
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // CircleAvatar(
-                  //   radius: 50,
-                  //   backgroundImage: AssetImage('assets/images/profile_picture.png'),
-                  // ),
-                  SizedBox(height: 16),
-                  Text(
-                    state is ProfileSucess ? state.userModel.fullName : "",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+      body: Center(
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            if (state is ProfileLoading) {
+              return const CircularProgressIndicator();
+            }
+
+            if (state is ProfileFailure) {
+              return Text(state.errorMessage);
+            }
+
+            if (state is ProfileSucess) {
+              log(state.userModel.fullName);
+              log(state.userModel.email);
+            }
+
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // CircleAvatar(
+                //   radius: 50,
+                //   backgroundImage: AssetImage('assets/images/profile_picture.png'),
+                // ),
+                const SizedBox(height: 16),
+                Text(
+                  state is ProfileSucess ? state.userModel.fullName : "",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    state is ProfileSucess ? state.userModel.email : "",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    'My Orders',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Settings',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    'Logout',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              );
-            },
-          ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  state is ProfileSucess ? state.userModel.email : "",
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'My Orders',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Settings',
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Logout',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
 }
-
 
 // create a appropriate  ui for profile view with a profile picture, name, email, and a list of options like "My Orders", "Settings", "Logout" etc.
 
